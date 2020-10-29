@@ -123,6 +123,11 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         jLabel3.setText("Id");
 
         jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -238,6 +243,24 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     private void jtfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfIdActionPerformed
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        categoria=new Categoria();
+        
+        categoria.setId( Integer.parseInt( jtfId.getText() ) );
+        
+        try {
+            categoriaControlador.eliminar(categoria);
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            jtListadoCategorias.setModel( new GrillaCategoria( categoriaControlador.listar() ));
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
