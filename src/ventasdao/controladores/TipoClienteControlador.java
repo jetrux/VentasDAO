@@ -11,7 +11,7 @@ import ventasdao.objetos.TipoCliente;
 
 /**
  *
- * @author Gaston
+ * @author hchanampe
  */
 public class TipoClienteControlador implements ICrud<TipoCliente>{
 
@@ -21,17 +21,17 @@ public class TipoClienteControlador implements ICrud<TipoCliente>{
     }
 
     @Override
-    public boolean modificar(TipoCliente entidad) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public boolean eliminar(TipoCliente entidad) throws SQLException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public TipoCliente extraer(int id) {
+    public TipoCliente extraer(int id) throws SQLException, Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean modificar(TipoCliente entidad) throws SQLException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -39,6 +39,5 @@ public class TipoClienteControlador implements ICrud<TipoCliente>{
     public List<TipoCliente> listar() throws SQLException, Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
     
 }

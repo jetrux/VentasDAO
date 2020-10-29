@@ -7,17 +7,22 @@ package ventasdao.objetos;
 
 /**
  *
- * @author Gaston
+ * @author hchanampe
  */
 public class TipoCliente {
     
     private Integer id;
+    
     private String nombre;
+    
     private String descripcion;
 
+
+    
     public TipoCliente() {
     }
 
+        
     public TipoCliente(Integer id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
@@ -47,6 +52,8 @@ public class TipoCliente {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+    
+    
     
     
 }

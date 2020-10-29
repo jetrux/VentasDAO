@@ -12,9 +12,13 @@ package ventasdao.objetos;
 public class Cliente {
     
     private Integer id;
+    
     private String documento;
+    
     private String nombre;
+    
     private String apellido;
+    
     private TipoCliente tipoCliente;
 
     public TipoCliente getTipoCliente() {
@@ -24,9 +28,9 @@ public class Cliente {
     public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente;
     }
+
     
-    
-    
+
     public String getCuil() {
         return documento;
     }

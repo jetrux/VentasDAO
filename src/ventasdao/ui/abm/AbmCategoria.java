@@ -8,7 +8,7 @@ package ventasdao.ui.abm;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import ventasdao.controladores.CategoriaControlador;
 import ventasdao.objetos.Categoria;
 import ventasdao.ui.grilla.GrillaCategoria;
@@ -26,10 +26,6 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     private CategoriaControlador categoriaControlador;
     private GrillaCategoria grillaCategoria;
     
-    public Integer id;
-    public String denom;
-    public String descr;
-    
     public AbmCategoria() {
         initComponents();
         
@@ -42,8 +38,8 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
             e.printStackTrace ();
         }
 
-        GrillaCategoria grilla = new GrillaCategoria(categorias);
-        jtListadoCategorias.setModel(grilla);
+        grillaCategoria = new GrillaCategoria(categorias);
+        jtListadoCategorias.setModel(grillaCategoria);
     }
     
     public void limpiarCampos(){
@@ -69,10 +65,10 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         jbAltaCategoria = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListadoCategorias = new javax.swing.JTable();
-        jbEliminar = new javax.swing.JButton();
         jbModificar = new javax.swing.JButton();
+        jtfId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtfID = new javax.swing.JTextField();
+        jbEliminar = new javax.swing.JButton();
 
         setClosable(true);
 
@@ -110,13 +106,6 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(jtListadoCategorias);
 
-        jbEliminar.setText("Eliminar");
-        jbEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbEliminarMouseClicked(evt);
-            }
-        });
-
         jbModificar.setText("Modificar");
         jbModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,140 +113,105 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("ID");
+        jtfId.setEnabled(false);
+        jtfId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfIdActionPerformed(evt);
+            }
+        });
 
-        jtfID.setEditable(false);
-        jtfID.setEnabled(false);
+        jLabel3.setText("Id");
+
+        jbEliminar.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtfID)
-                    .addComponent(jtfDenominacion)
-                    .addComponent(jtfDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfDenominacion)
+                            .addComponent(jtfDescripcion)
+                            .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jbAltaCategoria)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbModificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbEliminar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(106, 106, 106)
-                .addComponent(jbAltaCategoria)
-                .addGap(141, 141, 141)
-                .addComponent(jbModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbEliminar)
-                .addGap(66, 66, 66))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGap(7, 7, 7)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jtfID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jtfDenominacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jtfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbAltaCategoria)
+                            .addComponent(jbModificar)
+                            .addComponent(jbEliminar)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(51, 51, 51)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbEliminar)
-                    .addComponent(jbModificar)
-                    .addComponent(jbAltaCategoria))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAltaCategoriaActionPerformed
+    private void jbAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_jbAltaCategoriaActionPerformed
         
+        
+        // TODO add your handling code here:
+        categoria = new Categoria();
+        
+        categoria.setDenominacion(jtfDenominacion.getText());
+        categoria.setDescripcion(jtfDescripcion.getText());
+        
+        
+        categoriaControlador.crear(categoria);
+           
+        jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
     }//GEN-LAST:event_jbAltaCategoriaActionPerformed
 
     private void jbAltaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAltaCategoriaMouseClicked
-        // TODO add your handling code here:
-        categoria = new Categoria();
-
-        if(jtfDenominacion.getText().isEmpty()||jtfDescripcion.getText().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "Llene todos los campos");
-        }
-        else
-        {
-            categoria.setDenominacion(jtfDenominacion.getText());
-            categoria.setDescripcion(jtfDescripcion.getText());
-        }
-
-        try {
-            categoriaControlador.crear(categoria);
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+     
     }//GEN-LAST:event_jbAltaCategoriaMouseClicked
 
-    private void jbEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbEliminarMouseClicked
-        categoria = new Categoria();
-        
-        //categoriaControlador.eliminar(categoria);
-        
-        try {
-            categoriaControlador.eliminar(categoria);
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jbEliminarMouseClicked
-
     private void jtListadoCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoCategoriasMouseClicked
-        // TODO add your handling code here:
         
-        Categoria categoria=grillaCategoria.get
+       Categoria categoria = grillaCategoria.getCategoriaFromRow(jtListadoCategorias.getSelectedRow());
+       
+       jtfDenominacion.setText(categoria.getDenominacion());
+       jtfDescripcion.setText(categoria.getDescripcion());
+       jtfId.setText( categoria.getId().toString() );
+       
+      
         
-        int fila=jtListadoCategorias.getSelectedRow();
-        
-        if(fila==-1)
-        {
-            JOptionPane.showMessageDialog(null, "categoria no selecionada");
-        }
-        else
-        {
-            id=Integer.parseInt((String)jtfID.toString());
-            denom = (String)jtListadoCategorias.getValueAt(fila, 1);
-            descr = (String)jtListadoCategorias.getValueAt(fila, 2);
-            
-            jtfID.setText(categoria.getId().toString());
-            jtfDenominacion.setText(categoria.getDenominacion());
-            jtfDescripcion.setText(categoria.getDescripcion());
-        }        
     }//GEN-LAST:event_jtListadoCategoriasMouseClicked
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -265,9 +219,9 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
             // TODO add your handling code here:
             categoria = new Categoria();
             
-            categoria.setDenominacion(jtfDenominacion.getText());
-            categoria.setDescripcion(jtfDescripcion.getText());
-            categoria.setId(Integer.parseInt(jtfID.getText()));
+            categoria.setDenominacion( jtfDenominacion.getText() );
+            categoria.setDescripcion( jtfDescripcion.getText() );
+            categoria.setId( Integer.parseInt( jtfId.getText() ) );
             
             categoriaControlador.modificar(categoria);
         } catch (Exception ex) {
@@ -275,11 +229,15 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         }
         
         try {
-            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
+            jtListadoCategorias.setModel( new GrillaCategoria( categoriaControlador.listar() ));
         } catch (Exception ex) {
             Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbModificarActionPerformed
+
+    private void jtfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfIdActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -293,6 +251,6 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JTable jtListadoCategorias;
     private javax.swing.JTextField jtfDenominacion;
     private javax.swing.JTextField jtfDescripcion;
-    private javax.swing.JTextField jtfID;
+    private javax.swing.JTextField jtfId;
     // End of variables declaration//GEN-END:variables
 }

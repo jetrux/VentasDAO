@@ -32,35 +32,33 @@ public class GrillaCategoria extends AbstractTableModel{
     }
 
     @Override
-    public Object getValueAt(int rowIndex, int columnIndex) {
+    public Object getValueAt(int rowIndex, int columnIndex) 
+    {
              Categoria c = categorias.get(rowIndex);
                 
-          switch(columnIndex){
+          switch(columnIndex)
+          {
               case 0: return c.getId();
               case 1: return c.getDenominacion();
               case 2: return c.getDescripcion();
               default: return "";
           }
-          
-          
-          
     }
 
     @Override
-    public String getColumnName(int column) {
-        
-        switch(column){
+    public String getColumnName(int column)
+    {        
+        switch(column)
+        {
             case 0: return "ID";
             case 1: return "DENOMINACION";
             case 2: return "DESCRIPCION";
             default: return "";
-        
-        
         }
-        
     }
     
-    
- 
-    
+   public Categoria getCategoriaFromRow(int rowIndex)
+   {
+       return categorias.get(rowIndex);
+   }
 }
