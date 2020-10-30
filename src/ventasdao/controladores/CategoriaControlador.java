@@ -23,18 +23,11 @@ import ventasdao.objetos.Categoria;
  */
 public class CategoriaControlador implements ICrud<Categoria>{
     
-    private Connection connection;
-    
-    private Statement stmt;
-    
-    private PreparedStatement ps;
-    
-    private ResultSet rs;
-    
+    private Connection connection;    
+    private Statement stmt;    
+    private PreparedStatement ps;    
+    private ResultSet rs;    
     private String sql;
-    
-    
-  
     
     public ArrayList<Categoria> listar() throws SQLException, Exception{
     
@@ -56,12 +49,7 @@ public class CategoriaControlador implements ICrud<Categoria>{
                 categoria.setDenominacion(rs.getString("denominacion"));
                 categoria.setDescripcion(rs.getString("descripcion"));
                 categoria.setId(rs.getInt("id"));
-                
-                        //System.out.println(cliente);
-                
-                
                 categorias.add(categoria);
-                
             }
             //System.out.println(cont);
             //connection.close();

@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 
 import ventasdao.dominio.Conexion;
 import ventasdao.objetos.Cliente;
+import ventasdao.objetos.TipoCliente;
 
 /**
  *
@@ -23,14 +24,10 @@ import ventasdao.objetos.Cliente;
  */
 public class ClienteControlador implements ICrud<Cliente>{
     
-    private Connection connection;
-    
-    private Statement stmt;
-    
+    private Connection connection;    
+    private Statement stmt;    
     private PreparedStatement ps;
-    
-    private ResultSet rs;
-    
+    private ResultSet rs;    
     private String sql;
     
     
@@ -41,28 +38,31 @@ public class ClienteControlador implements ICrud<Cliente>{
     
     @Override
     public boolean crear(Cliente entidad) throws SQLException, Exception{
-
-        connection = Conexion.obtenerConexion ();
-        String sql = "INSERT INTO clientes (nombre,documento,apellido) VALUES (?,?,?)";
+        connection=Conexion.obtenerConexion();
+        this.sql="INSERT INTO clientes(nombre, cuil, razon_social) VALUES (?, ?, ?);";
         
-        try {
-            ps = connection.prepareStatement(sql);
-            ps.setString(1, entidad.getNombre());
-            ps.setString(2, entidad.getDocumento());
-            ps.setString(3, entidad.getApellido ());
-            ps.executeUpdate();
-            connection.close();
-            
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CategoriaControlador.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+        ps = connection.prepareStatement(sql);
+        ps.setString(1,entidad.getNombre());
+        ps.setString(2,entidad.getCuil());
+        ps.setString(3,entidad.getRazonSocial());
+       
+        ps.executeUpdate();
+        connection.close();
+        
+        return true;
     }
 
     @Override
-    public boolean eliminar(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean eliminar(Cliente entidad) throws SQLException, Exception{
+        connection=Conexion.obtenerConexion();
+        this.sql="DELETE FROM clientes WHERE id=?";
+        
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, entidad.getId());
+       
+        ps.executeUpdate();
+        connection.close();
+        return true;      
     }
 
     @Override
@@ -83,12 +83,10 @@ public class ClienteControlador implements ICrud<Cliente>{
                 Cliente cliente = new Cliente();
                 
                 cliente.setNombre(rs.getString("nombre"));
-                cliente.setCuil(rs.getString("documento"));
+                cliente.setCuil(rs.getString("cuil"));
+                cliente.setRazonSocial(rs.getString("razon_social"));
+                //cliente.setTipoCliente((TipoCliente) rs.getObject("tipo_cliente"));
                 cliente.setId(rs.getInt("id"));
-                cliente.setApellido (rs.getString("apellido"));
-                
-                        //System.out.println(cliente);
-                
                 
                 clientes.add(cliente);
                 
@@ -104,8 +102,20 @@ public class ClienteControlador implements ICrud<Cliente>{
     }
 
     @Override
-    public boolean modificar(Cliente entidad) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean modificar(Cliente entidad) throws SQLException, Exception {
+        connection=Conexion.obtenerConexion();
+        this.sql="UPDATE clientes SET nombre=?, cuil=?, razon_social=? WHERE id=?";
+        
+        ps = connection.prepareStatement(sql);
+        ps.setString(1,entidad.getNombre());
+        ps.setString(2,entidad.getCuil());
+        ps.setString(3,entidad.getRazonSocial());
+        ps.setInt(4, entidad.getId());
+       
+        ps.executeUpdate();
+        connection.close();
+        
+        return true;
     }
 
     @Override

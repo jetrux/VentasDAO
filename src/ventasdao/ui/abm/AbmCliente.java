@@ -7,8 +7,11 @@ package ventasdao.ui.abm;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ventasdao.controladores.ClienteControlador;
 import ventasdao.objetos.Cliente;
+import ventasdao.objetos.TipoCliente;
 import ventasdao.ui.grilla.GrillaCliente;
 
 /**
@@ -51,7 +54,7 @@ public class AbmCliente extends javax.swing.JInternalFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()  {
+    private void initComponents() {
 
         jtfNombre = new javax.swing.JTextField();
         jtfCuil = new javax.swing.JTextField();
@@ -59,9 +62,15 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jbAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtListadoCliente = new javax.swing.JTable();
+        jbModificar = new javax.swing.JButton();
+        jbEliminar = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jtfId = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jcbTipoCliente = new javax.swing.JComboBox<>();
 
         setClosable(true);
 
@@ -71,14 +80,10 @@ public class AbmCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Razon Social");
 
-        jButton1.setText("Agregar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jbAgregar.setText("Agregar");
+        jbAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                try {
-                    jButton1ActionPerformed(evt);
-                } catch (Exception e) {
-                    e.printStackTrace ();
-                }
+                jbAgregarActionPerformed(evt);
             }
         });
 
@@ -93,38 +98,77 @@ public class AbmCliente extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jtListadoCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtListadoClienteMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtListadoCliente);
+
+        jbModificar.setText("Modificar");
+        jbModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbModificarActionPerformed(evt);
+            }
+        });
+
+        jbEliminar.setText("Eliminar");
+        jbEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEliminarActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Tipo Cliente");
+
+        jtfId.setEnabled(false);
+
+        jLabel5.setText("ID");
+
+        jcbTipoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGap(36, 36, 36)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfNombre)
-                            .addComponent(jtfCuil)
-                            .addComponent(jtfRazonSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(137, 137, 137)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jtfRazonSocial)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jtfCuil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                        .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jtfId, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jcbTipoCliente, 0, 190, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jbAgregar)
+                .addGap(51, 51, 51)
+                .addComponent(jbModificar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(jbEliminar)
+                .addGap(446, 446, 446))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
@@ -136,43 +180,110 @@ public class AbmCliente extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(52, 52, 52)
-                        .addComponent(jButton1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jcbTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbAgregar)
+                    .addComponent(jbModificar)
+                    .addComponent(jbEliminar))
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws Exception  {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         // TODO add your handling code here:
         cliente = new Cliente();
-        cliente.setCuil(jtfCuil.getText());
+        
         cliente.setNombre(jtfNombre.getText());
-        cliente.setApellido(jtfRazonSocial.getText());
-
+        cliente.setCuil(jtfCuil.getText());
+        cliente.setRazonSocial(jtfRazonSocial.getText());
+        
         try {
             clienteControlador.crear(cliente);
-        }catch (SQLException e){
-            e.printStackTrace ();
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+    }//GEN-LAST:event_jbAgregarActionPerformed
+
+    private void jtListadoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoClienteMouseClicked
+        // TODO add your handling code here:
+        Cliente cliente = grillaCliente.getClienteFromRow(jtListadoCliente.getSelectedRow());
+       
+       jtfNombre.setText(cliente.getNombre());
+       jtfCuil.setText(cliente.getCuil());
+       jtfRazonSocial.setText(cliente.getRazonSocial());
+       //jcbTipoCliente.setSelectedIndex(cliente.getTipoCliente().getId());
+       jtfId.setText(cliente.getId().toString());
+    }//GEN-LAST:event_jtListadoClienteMouseClicked
+
+    private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
+        // TODO add your handling code here:
+        cliente = new Cliente();
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+        cliente.setId(Integer.parseInt(jtfId.getText()));
+        
+        try {
+            clienteControlador.eliminar(cliente);
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
+        // TODO add your handling code here:
+        cliente = new Cliente();
+        
+        cliente.setNombre(jtfNombre.getText());
+        cliente.setCuil(jtfCuil.getText());
+        cliente.setRazonSocial(jtfRazonSocial.getText());
+        cliente.setId(Integer.parseInt(jtfId.getText()));
+        
+        try {
+            clienteControlador.modificar(cliente);
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbModificarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton jbAgregar;
+    private javax.swing.JButton jbEliminar;
+    private javax.swing.JButton jbModificar;
+    private javax.swing.JComboBox<String> jcbTipoCliente;
     private javax.swing.JTable jtListadoCliente;
     private javax.swing.JTextField jtfCuil;
+    private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfNombre;
     private javax.swing.JTextField jtfRazonSocial;
     // End of variables declaration//GEN-END:variables

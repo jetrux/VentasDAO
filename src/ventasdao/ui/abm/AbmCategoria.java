@@ -188,35 +188,13 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_jbAltaCategoriaActionPerformed
-        
-        
-        // TODO add your handling code here:
-        categoria = new Categoria();
-        
-        categoria.setDenominacion(jtfDenominacion.getText());
-        categoria.setDescripcion(jtfDescripcion.getText());
-        
-        
-        categoriaControlador.crear(categoria);
-           
-        jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
-    }//GEN-LAST:event_jbAltaCategoriaActionPerformed
-
-    private void jbAltaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAltaCategoriaMouseClicked
-     
-    }//GEN-LAST:event_jbAltaCategoriaMouseClicked
-
     private void jtListadoCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoCategoriasMouseClicked
         
        Categoria categoria = grillaCategoria.getCategoriaFromRow(jtListadoCategorias.getSelectedRow());
        
        jtfDenominacion.setText(categoria.getDenominacion());
        jtfDescripcion.setText(categoria.getDescripcion());
-       jtfId.setText( categoria.getId().toString() );
-       
-      
-        
+       jtfId.setText(categoria.getId().toString());
     }//GEN-LAST:event_jtListadoCategoriasMouseClicked
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -261,6 +239,31 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
             Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
+
+    private void jbAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAltaCategoriaActionPerformed
+
+        // TODO add your handling code here:
+        categoria = new Categoria();
+
+        categoria.setDenominacion(jtfDenominacion.getText());
+        categoria.setDescripcion(jtfDescripcion.getText());
+
+        try {
+            categoriaControlador.crear(categoria);
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try {
+            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
+        } catch (Exception ex) {
+            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jbAltaCategoriaActionPerformed
+
+    private void jbAltaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAltaCategoriaMouseClicked
+
+    }//GEN-LAST:event_jbAltaCategoriaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

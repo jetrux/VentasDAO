@@ -11,58 +11,29 @@ package ventasdao.objetos;
  */
 public class Cliente {
     
-    private Integer id;
-    
-    private String documento;
-    
-    private String nombre;
-    
-    private String apellido;
-    
+    private Integer id;      
+    private String nombre;    
+    private String cuil;     
+    private String razonSocial; 
     private TipoCliente tipoCliente;
 
-    public TipoCliente getTipoCliente() {
-        return tipoCliente;
+    public Cliente() {
     }
 
-    public void setTipoCliente(TipoCliente tipoCliente) {
+    public Cliente(Integer id, String nombre, String cuil, String razonSocial, TipoCliente tipoCliente) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cuil = cuil;
+        this.razonSocial = razonSocial;
         this.tipoCliente = tipoCliente;
-    }
-
+    }    
     
-
-    public String getCuil() {
-        return documento;
-    }
-
-    public void setCuil(String cuil) {
-        this.documento = cuil;
-    }
-
-
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-
-    public String getDocumento() { return documento;
-    }
-
-    public void setDocumento(String documento) {
-        this.documento = documento;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
 
     public String getNombre() {
@@ -73,6 +44,27 @@ public class Cliente {
         this.nombre = nombre;
     }
 
- 
-    
+    public String getCuil() {
+        return cuil;
+    }
+
+    public void setCuil(String cuil) {
+        this.cuil = cuil;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public TipoCliente getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(TipoCliente tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
 }
