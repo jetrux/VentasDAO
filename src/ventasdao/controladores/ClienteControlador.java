@@ -37,9 +37,43 @@ public class ClienteControlador implements ICrud<Cliente>{
     //public void eliminarCategoria(Categoria c);
     
     @Override
+    public ArrayList<Cliente> listar() throws SQLException,Exception{
+        
+     connection = Conexion.obtenerConexion ();
+        try{
+            
+            this.stmt = connection.createStatement();
+            this.sql = "SELECT * FROM clientes";
+            //this.sql="SELECT cl.id,cl.nombre,cl.cuil,cl.razon_social,tc.nombre AS tipo_cliente FROM clientes cl INNER JOIN tipo_cliente tc ON cl.tipo_cliente_id=tc.id";
+            this.rs   = stmt.executeQuery(sql);
+            connection.close();
+            
+            ArrayList<Cliente> clientes = new ArrayList();
+            
+            while(rs.next()){
+                
+                Cliente cliente = new Cliente();
+                
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setCuil(rs.getString("cuil"));
+                cliente.setRazonSocial(rs.getString("razon_social"));
+                //cliente.setTipoCliente(rs.getString("tipo_cliente"));
+                cliente.setId(rs.getInt("id"));
+                
+                clientes.add(cliente);                
+            }
+            //System.out.println(cont);
+            return clientes;
+        } catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
+    @Override
     public boolean crear(Cliente entidad) throws SQLException, Exception{
         connection=Conexion.obtenerConexion();
-        this.sql="INSERT INTO clientes(nombre, cuil, razon_social) VALUES (?, ?, ?);";
+        this.sql="INSERT INTO clientes(nombre, cuil, razon_social) VALUES (?, ?, ?)";
         
         ps = connection.prepareStatement(sql);
         ps.setString(1,entidad.getNombre());
@@ -63,42 +97,6 @@ public class ClienteControlador implements ICrud<Cliente>{
         ps.executeUpdate();
         connection.close();
         return true;      
-    }
-
-    @Override
-    public ArrayList<Cliente> listar() throws SQLException,Exception{
-        
-     connection = Conexion.obtenerConexion ();
-        try{
-            
-            this.stmt = connection.createStatement();
-            this.sql = "SELECT * FROM clientes";
-            this.rs   = stmt.executeQuery(sql);
-            connection.close();
-            
-            ArrayList<Cliente> clientes = new ArrayList();
-            
-            while(rs.next()){
-                
-                Cliente cliente = new Cliente();
-                
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setCuil(rs.getString("cuil"));
-                cliente.setRazonSocial(rs.getString("razon_social"));
-                //cliente.setTipoCliente((TipoCliente) rs.getObject("tipo_cliente"));
-                cliente.setId(rs.getInt("id"));
-                
-                clientes.add(cliente);
-                
-            }
-            //System.out.println(cont);
-            return clientes;
-        } catch(SQLException ex){
-            ex.printStackTrace();
-        }
-        return null;
-    
-
     }
 
     @Override
