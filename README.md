@@ -1,6 +1,6 @@
 # VentasDAO
 
-Proyecto que contiene el Alta de Categoria y Clientes con JDBC
+JDBC utilizado en clases de Paradigmas III
 
 
 ### Installing 🔩
@@ -12,6 +12,18 @@ script01.sql
 
 ```
 script02.sql
+```
+
+```
+script03.sql
+```
+
+```
+script04.sql
+```
+
+```
+script05.sql
 ```
 contienen los scripts de la base de datos
 
