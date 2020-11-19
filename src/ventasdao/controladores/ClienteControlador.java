@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 import ventasdao.dominio.Conexion;
 import ventasdao.objetos.Cliente;
-import ventasdao.objetos.TipoCliente;
+//import ventasdao.objetos.TipoCliente;
 
 /**
  *
@@ -29,13 +29,7 @@ public class ClienteControlador implements ICrud<Cliente>{
     private PreparedStatement ps;
     private ResultSet rs;    
     private String sql;
-    
-    
-
-    //public void modificarCategoria(Categoria c);
-    //public Categoria obtenerCategoria(Integer id);
-    //public void eliminarCategoria(Categoria c);
-    
+        
     @Override
     public ArrayList<Cliente> listar() throws SQLException,Exception{
         
@@ -45,7 +39,7 @@ public class ClienteControlador implements ICrud<Cliente>{
             this.stmt = connection.createStatement();
             this.sql = "SELECT * FROM clientes";
             //this.sql="SELECT cl.id,cl.nombre,cl.cuil,cl.razon_social,tc.nombre AS tipo_cliente FROM clientes cl INNER JOIN tipo_cliente tc ON cl.tipo_cliente_id=tc.id";
-            this.rs   = stmt.executeQuery(sql);
+            this.rs = stmt.executeQuery(sql);
             connection.close();
             
             ArrayList<Cliente> clientes = new ArrayList();
@@ -54,11 +48,11 @@ public class ClienteControlador implements ICrud<Cliente>{
                 
                 Cliente cliente = new Cliente();
                 
+                cliente.setId(rs.getInt("id"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setCuil(rs.getString("cuil"));
                 cliente.setRazonSocial(rs.getString("razon_social"));
-                //cliente.setTipoCliente(rs.getString("tipo_cliente"));
-                cliente.setId(rs.getInt("id"));
+                //cliente.setTipoCliente(rs.getInt("tipo_cliente_id"));
                 
                 clientes.add(cliente);                
             }
@@ -73,13 +67,14 @@ public class ClienteControlador implements ICrud<Cliente>{
     @Override
     public boolean crear(Cliente entidad) throws SQLException, Exception{
         connection=Conexion.obtenerConexion();
-        this.sql="INSERT INTO clientes(nombre, cuil, razon_social) VALUES (?, ?, ?)";
+        this.sql="INSERT INTO clientes(nombre, cuil, razon_social, tipo_cliente_id) VALUES (?, ?, ? ,?)";
         
         ps = connection.prepareStatement(sql);
         ps.setString(1,entidad.getNombre());
         ps.setString(2,entidad.getCuil());
         ps.setString(3,entidad.getRazonSocial());
-       
+        ps.setInt(4, entidad.getTipoCliente().getId());
+        
         ps.executeUpdate();
         connection.close();
         

@@ -10,48 +10,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import ventasdao.controladores.ClienteControlador;
 import ventasdao.controladores.TipoClienteControlador;
-import ventasdao.objetos.Cliente;
 import ventasdao.objetos.TipoCliente;
-import ventasdao.ui.grilla.GrillaCliente;
+import ventasdao.ui.grilla.GrillaTipoCliente;
 
 /**
  *
  * @author Hugo Chanampe
  */
-public class AbmCliente extends javax.swing.JInternalFrame {
+public class AbmTipoCliente extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AbmCliente
      */
-    private Cliente cliente;
-    private GrillaCliente grillaCliente;
-    private ClienteControlador clienteControlador = new ClienteControlador();
+    private TipoCliente tipoCliente;
+    private GrillaTipoCliente grillaTipoCliente;
     private TipoClienteControlador tipoClienteControlador = new TipoClienteControlador();
-    private DefaultComboBoxModel modelCombo;
     
     
-    public AbmCliente() {
+    
+    public AbmTipoCliente() {
         initComponents();
         
-        ArrayList<Cliente> clientes;
+        ArrayList<TipoCliente> clientes;
         try {
-            clientes = clienteControlador.listar();
-            grillaCliente = new GrillaCliente(clientes);
+            clientes = (ArrayList<TipoCliente>) tipoClienteControlador.listar();
+            grillaTipoCliente = new GrillaTipoCliente(clientes);
         } catch (Exception e) {
             e.printStackTrace ();
         }
+
+
         
-        jtListadoCliente.setModel(grillaCliente);
+        jtListadoTipoCliente.setModel(grillaTipoCliente);
         
-        try {
-            modelCombo = new DefaultComboBoxModel(tipoClienteControlador.listar().toArray());
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        jcbTipoCliente.setModel(modelCombo);
         
     }
 
@@ -65,28 +57,22 @@ public class AbmCliente extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jtfNombre = new javax.swing.JTextField();
-        jtfCuil = new javax.swing.JTextField();
-        jtfRazonSocial = new javax.swing.JTextField();
+        jtfDescripcion = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         jbAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtListadoCliente = new javax.swing.JTable();
+        jtListadoTipoCliente = new javax.swing.JTable();
         jbModificar = new javax.swing.JButton();
         jbEliminar = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         jtfId = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jcbTipoCliente = new javax.swing.JComboBox<>();
 
         setClosable(true);
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("Cuil");
-
-        jLabel3.setText("Razon Social");
+        jLabel2.setText("Descrpcion");
 
         jbAgregar.setText("Agregar");
         jbAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +81,7 @@ public class AbmCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jtListadoCliente.setModel(new javax.swing.table.DefaultTableModel(
+        jtListadoTipoCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -106,12 +92,12 @@ public class AbmCliente extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtListadoCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtListadoTipoCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtListadoClienteMouseClicked(evt);
+                jtListadoTipoClienteMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtListadoCliente);
+        jScrollPane1.setViewportView(jtListadoTipoCliente);
 
         jbModificar.setText("Modificar");
         jbModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -127,18 +113,9 @@ public class AbmCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel4.setText("Tipo Cliente");
-
         jtfId.setEnabled(false);
 
         jLabel5.setText("ID");
-
-        jcbTipoCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Tipo" }));
-        jcbTipoCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbTipoClienteActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,16 +126,12 @@ public class AbmCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jtfRazonSocial)
-                    .addComponent(jtfCuil, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                    .addComponent(jtfDescripcion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jtfId, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jcbTipoCliente, 0, 190, Short.MAX_VALUE))
+                    .addComponent(jtfId, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -186,20 +159,12 @@ public class AbmCliente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtfCuil, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jtfRazonSocial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jcbTipoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jtfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 86, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbAgregar)
                     .addComponent(jbModificar)
@@ -212,115 +177,82 @@ public class AbmCliente extends javax.swing.JInternalFrame {
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         // TODO add your handling code here:
-        cliente = new Cliente();
+        tipoCliente = new TipoCliente();
         
-        cliente.setNombre(jtfNombre.getText());
-        cliente.setCuil(jtfCuil.getText());
-        cliente.setRazonSocial(jtfRazonSocial.getText());
-        cliente.setTipoCliente((TipoCliente)jcbTipoCliente.getSelectedItem());
+        tipoCliente.setNombre(jtfNombre.getText());
+        tipoCliente.setDescripcion(jtfDescripcion.getText());
         
         try {
-            clienteControlador.crear(cliente);
+            tipoClienteControlador.crear(tipoCliente);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+            jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>)tipoClienteControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_jbAgregarActionPerformed
 
-    private void jtListadoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoClienteMouseClicked
+    private void jtListadoTipoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoTipoClienteMouseClicked
         // TODO add your handling code here:
-        Cliente cliente = grillaCliente.getClienteFromRow(jtListadoCliente.getSelectedRow());
-       
-       jtfNombre.setText(cliente.getNombre());
-       jtfCuil.setText(cliente.getCuil());
-       jtfRazonSocial.setText(cliente.getRazonSocial());
-       //jcbTipoCliente.setSelectedIndex(cliente.getTipoCliente().getId());
-       jtfId.setText(cliente.getId().toString());
-    }//GEN-LAST:event_jtListadoClienteMouseClicked
+        TipoCliente tipoCliente = grillaTipoCliente.getClienteFromRow(jtListadoTipoCliente.getSelectedRow());
+        
+        jtfNombre.setText(tipoCliente.getNombre());
+        jtfDescripcion.setText(tipoCliente.getDescripcion());
+        jtfId.setText(tipoCliente.getId().toString());
+    }//GEN-LAST:event_jtListadoTipoClienteMouseClicked
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
-        cliente = new Cliente();
+        tipoCliente = new TipoCliente();
         
-        cliente.setId(Integer.parseInt(jtfId.getText()));
+        tipoCliente.setId(Integer.parseInt(jtfId.getText()));
         
         try {
-            clienteControlador.eliminar(cliente);
+            tipoClienteControlador.eliminar(tipoCliente);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+            jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>) tipoClienteControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         // TODO add your handling code here:
-        cliente = new Cliente();
+        tipoCliente = new TipoCliente();
         
-        cliente.setNombre(jtfNombre.getText());
-        cliente.setCuil(jtfCuil.getText());
-        cliente.setRazonSocial(jtfRazonSocial.getText());
-        cliente.setId(Integer.parseInt(jtfId.getText()));
+        tipoCliente.setNombre(jtfNombre.getText());
+        tipoCliente.setDescripcion(jtfDescripcion.getText());
+        tipoCliente.setId(Integer.parseInt(jtfId.getText()));
         
         try {
-            clienteControlador.modificar(cliente);
+            tipoClienteControlador.modificar(tipoCliente);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
+            jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>) tipoClienteControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbModificarActionPerformed
-
-    private void jcbTipoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoClienteActionPerformed
-        // TODO add your handling code here:
-        cliente=new Cliente();
-        
-        TipoClienteControlador tipoClienteControl = new TipoClienteControlador();
-        ArrayList<TipoCliente> alTipo = new ArrayList<>();
-        
-        try {
-            alTipo = (ArrayList<TipoCliente>) tipoClienteControl.listar();
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        TipoCliente[] obj= new TipoCliente[alTipo.size()];
-        for (int i = 0; i < alTipo.size(); i++) {
-            obj[i]= alTipo.get(i);
-          
-        }
-        DefaultComboBoxModel<TipoCliente> boxModel= new DefaultComboBoxModel<>(obj);
-        //jcbTipoCliente.setModel(boxModel);
-        jcbTipoCliente.setSelectedItem(null);
-    }//GEN-LAST:event_jcbTipoClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton jbAgregar;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbModificar;
-    private javax.swing.JComboBox<String> jcbTipoCliente;
-    private javax.swing.JTable jtListadoCliente;
-    private javax.swing.JTextField jtfCuil;
+    private javax.swing.JTable jtListadoTipoCliente;
+    private javax.swing.JTextField jtfDescripcion;
     private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfNombre;
-    private javax.swing.JTextField jtfRazonSocial;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,8 @@
  */
 package ventasdao.objetos;
 
+import java.util.Date;
+
 /**
  *
  * @author Hugo Chanampe
@@ -14,19 +16,9 @@ public class Cliente {
     private Integer id;      
     private String nombre;    
     private String cuil;     
-    private String razonSocial; 
+    private String razonSocial;  
+    private Date fechaNacimiento;
     private TipoCliente tipoCliente;
-
-    public Cliente() {
-    }
-
-    public Cliente(Integer id, String nombre, String cuil, String razonSocial, TipoCliente tipoCliente) {
-        this.id = id;
-        this.nombre = nombre;
-        this.cuil = cuil;
-        this.razonSocial = razonSocial;
-        this.tipoCliente = tipoCliente;
-    }    
     
     public Integer getId() {
         return id;
@@ -66,5 +58,13 @@ public class Cliente {
 
     public void setTipoCliente(TipoCliente tipoCliente) {
         this.tipoCliente = tipoCliente;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 }
