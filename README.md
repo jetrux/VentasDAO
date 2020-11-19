@@ -23,7 +23,7 @@ script04.sql
 ```
 
 ```
-script05.sql
+script05.sql (En caso de error al ejecutar este .sql, borrar el DEFAULT que se encuentra en la linea 3)
 ```
 contienen los scripts de la base de datos
 
