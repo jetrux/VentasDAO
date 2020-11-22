@@ -26,20 +26,15 @@ import ventasdao.objetos.Producto;
 public class ProductoControlador implements ICrud<Producto> {
     
     private Connection connection;
-
     private Statement statementmt;
-
     private PreparedStatement ps;
-
     private ResultSet resultSet;
-
-    private String query;
-    
+    private String sql;    
     private CategoriaControlador categoriaControlador;
 
     @Override
     public boolean crear(Producto entidad) throws SQLException, Exception {
-connection = Conexion.obtenerConexion ();
+        connection = Conexion.obtenerConexion ();
         String sql = "INSERT INTO productos (nombre,descripcion,precio,fecha_creacion, categoria_id) VALUES (?,?,?,?,?)";
         Date fecha = new Date(entidad.getFechaCreacion().getTime());
         
@@ -62,7 +57,15 @@ connection = Conexion.obtenerConexion ();
 
     @Override
     public boolean eliminar(Producto entidad) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection=Conexion.obtenerConexion();
+        this.sql="DELETE FROM productos WHERE id=?";
+        
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, entidad.getId());
+       
+        ps.executeUpdate();
+        connection.close();
+        return true;
     }
 
     @Override
@@ -72,7 +75,24 @@ connection = Conexion.obtenerConexion ();
 
     @Override
     public boolean modificar(Producto entidad) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection = Conexion.obtenerConexion ();
+        //sql = "UPDATE productos SET categoria_id=?, nombre=?, stock_minimo=?, stock_maximo=?, precio=?, descripcion=?, fecha_creacion=? WHERE id=?";
+        sql = "UPDATE productos SET categoria_id=?, nombre=?, precio=?, descripcion=?, fecha_creacion=? WHERE id=?";
+       Date fecha = new Date(entidad.getFechaCreacion().getTime());
+        
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, entidad.getCategoria().getId());
+        ps.setString(2,entidad.getNombre());
+        //ps.setInt(3,entidad.getStockMax());
+        //ps.setInt(4,entidad.getStockMin());
+        ps.setFloat(3,entidad.getPrecio());
+        ps.setString(4,entidad.getDescripcion() );
+        ps.setDate(5, fecha);
+        ps.setInt(6, entidad.getId());
+        ps.executeUpdate();
+        
+        connection.close();
+        return true;
     }
 
     @Override
@@ -81,14 +101,14 @@ connection = Conexion.obtenerConexion ();
         try{
             
             this.statementmt = connection.createStatement();
-            this.query = "SELECT * FROM productos";
-            this.resultSet   = statementmt.executeQuery(query);
+            this.sql = "SELECT * FROM productos";
+            this.resultSet   = statementmt.executeQuery(sql);
             connection.close();
             
             ArrayList<Producto> productos = new ArrayList();
             
-            while(resultSet.next()){
-                
+            while(resultSet.next())
+            {                
                 Producto producto = new Producto();
                 
                 producto.setNombre(resultSet.getString("nombre"));
@@ -102,7 +122,6 @@ connection = Conexion.obtenerConexion ();
                 productos.add(producto);
                 
             }
-            //System.out.println(cont);
             return productos;
         } catch(SQLException ex){
             ex.printStackTrace();

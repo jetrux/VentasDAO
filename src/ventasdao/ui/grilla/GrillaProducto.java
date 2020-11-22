@@ -17,8 +17,6 @@ public class GrillaProducto extends AbstractTableModel{
     
     private ArrayList<Producto> productos = new ArrayList<>();
     
-    
-    
     public GrillaProducto(ArrayList<Producto> datos) {
         this.productos = datos;
     }
@@ -58,8 +56,11 @@ public class GrillaProducto extends AbstractTableModel{
             case 4: return "Precio";
             case 5: return "Fecha de Creacion";
             default: return "";
-        
-        
-        } //To change body of generated methods, choose Tools | Templates.
+        }
     }
+    
+    public Producto getProductoFromRow(int rowIndex)
+   {
+       return productos.get(rowIndex);
+   }
 }

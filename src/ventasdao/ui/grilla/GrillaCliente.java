@@ -47,8 +47,8 @@ public class GrillaCliente extends AbstractTableModel{
     @Override
     public String getColumnName(int column) {
         switch(column){
-            case 0: return "ID";
-            case 1: return "NOMBRE";
+            case 0: return "Id";
+            case 1: return "Nombre";
             case 2: return "CUIL";
             case 3: return "Razon Social";
             case 4: return "Tipo Cliente";
