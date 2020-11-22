@@ -287,6 +287,7 @@ public class AbmProducto extends javax.swing.JInternalFrame {
     private void jtListadoProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoProductoMouseClicked
         // TODO add your handling code here:
         Producto producto = grillaProducto.getProductoFromRow(jtListadoProducto.getSelectedRow());
+        
         jtfId.setText(producto.getId().toString());
         jtfNombre.setText(producto.getNombre());
         jcbCategorias.setSelectedItem(producto.getCategoria());

@@ -5,19 +5,12 @@ import java.util.Date;
 public class Producto {
     
     private Integer Id;
-
     private Categoria categoria;
-
     private String nombre;
-
     private String descripcion;
-
-    private Float precio;
-    
-    private Date FechaCreacion;
-    
-    private Integer StockMax;
-    
+    private Float precio;    
+    private Date FechaCreacion;    
+    private Integer StockMax;    
     private Integer StockMin;
 
     public Categoria getCategoria() {

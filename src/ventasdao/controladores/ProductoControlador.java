@@ -70,7 +70,28 @@ public class ProductoControlador implements ICrud<Producto> {
 
     @Override
     public Producto extraer(int id) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection = Conexion.obtenerConexion();
+        sql = "SELECT * FROM productos WHERE id = ?";
+        
+        ps = connection.prepareStatement(sql);            
+        ps.setInt(1, id);
+        
+        this.resultSet   = ps.executeQuery();
+        
+        connection.close();
+        
+        this.resultSet.next();
+        Producto producto = new Producto();
+        producto.setId(id);
+        producto.setCategoria(getCategoria(resultSet.getInt("categoria_id")));
+        producto.setNombre(resultSet.getString("nombre"));
+        producto.setStockMin(resultSet.getInt("stock_minimo"));
+        producto.setStockMax(resultSet.getInt("stock_maximo"));
+        producto.setPrecio(resultSet.getFloat("precio"));
+        producto.setDescripcion(resultSet.getString("descripcion"));
+        producto.setFechaCreacion(resultSet.getDate("fecha_creacion"));        
+        
+        return producto;
     }
 
     @Override

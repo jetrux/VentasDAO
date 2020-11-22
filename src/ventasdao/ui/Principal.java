@@ -9,6 +9,7 @@ import ventasdao.ui.abm.AbmCategoria;
 import ventasdao.ui.abm.AbmCliente;
 import ventasdao.ui.abm.AbmProducto;
 import ventasdao.ui.abm.AbmTipoCliente;
+import ventasdao.ui.abm.AbmFactura;
 
 /**
  *
@@ -39,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
         jmiCliente = new javax.swing.JMenuItem();
         jmiTipoCliente = new javax.swing.JMenuItem();
         jmiProducto = new javax.swing.JMenuItem();
+        jmiFactura = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -89,6 +91,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jmiProducto);
+
+        jmiFactura.setText("Factura");
+        jmiFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFacturaActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiFactura);
 
         jMenuBar1.add(jMenu1);
 
@@ -143,6 +153,13 @@ public class Principal extends javax.swing.JFrame {
         abmProducto.setVisible(true);
     }//GEN-LAST:event_jmiProductoActionPerformed
 
+    private void jmiFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFacturaActionPerformed
+        // TODO add your handling code here:
+        AbmFactura abmFactura = new AbmFactura();
+        jdpContenedorPrincipal.add(abmFactura);
+        abmFactura.setVisible(true);
+    }//GEN-LAST:event_jmiFacturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -184,6 +201,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jdpContenedorPrincipal;
     private javax.swing.JMenuItem jmiCategoria;
     private javax.swing.JMenuItem jmiCliente;
+    private javax.swing.JMenuItem jmiFactura;
     private javax.swing.JMenuItem jmiProducto;
     private javax.swing.JMenuItem jmiTipoCliente;
     // End of variables declaration//GEN-END:variables
