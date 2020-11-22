@@ -25,6 +25,12 @@ script04.sql
 ```
 script05.sql (En caso de error al ejecutar este .sql, borrar el DEFAULT que se encuentra en la linea 3)
 ```
+```
+script06.sql
+```
+```
+script07.sql
+```
 contienen los scripts de la base de datos
 
 ### Settings ⌨️
