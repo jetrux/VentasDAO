@@ -33,10 +33,13 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         initComponents();
         
         ArrayList<TipoCliente> clientes;
-        try {
+        try 
+        {
             clientes = (ArrayList<TipoCliente>) tipoClienteControlador.listar();
             grillaTipoCliente = new GrillaTipoCliente(clientes);
-        } catch (Exception e) {
+        } 
+        catch (Exception e) 
+        {
             e.printStackTrace ();
         }
 
@@ -184,14 +187,20 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         tipoCliente.setNombre(jtfNombre.getText());
         tipoCliente.setDescripcion(jtfDescripcion.getText());
         
-        try {
+        try 
+        {
             tipoClienteControlador.crear(tipoCliente);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        try 
+        {
             jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>)tipoClienteControlador.listar()));
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbAgregarActionPerformed
@@ -211,14 +220,20 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         
         tipoCliente.setId(Integer.parseInt(jtfId.getText()));
         
-        try {
+        try 
+        {
             tipoClienteControlador.eliminar(tipoCliente);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        try 
+        {
             jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>) tipoClienteControlador.listar()));
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbEliminarActionPerformed
@@ -231,14 +246,20 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         tipoCliente.setDescripcion(jtfDescripcion.getText());
         tipoCliente.setId(Integer.parseInt(jtfId.getText()));
         
-        try {
+        try 
+        {
             tipoClienteControlador.modificar(tipoCliente);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        try 
+        {
             jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>) tipoClienteControlador.listar()));
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jbModificarActionPerformed

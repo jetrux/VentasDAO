@@ -76,4 +76,8 @@ public class Producto {
     public void setStockMin(Integer StockMin) {
         this.StockMin = StockMin;
     }
+    
+    public String toString() {
+        return "" + nombre;
+    }
 }

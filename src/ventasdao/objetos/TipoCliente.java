@@ -49,7 +49,7 @@ public class TipoCliente {
         this.descripcion = descripcion;
     }
     
-    
-    
-    
+    public String toString() {
+        return "" + nombre;
+    }
 }

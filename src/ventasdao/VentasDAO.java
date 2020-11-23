@@ -20,16 +20,12 @@ public class VentasDAO {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-        CategoriaControlador categoriaControlador = new CategoriaControlador ();
+        /*CategoriaControlador categoriaControlador = new CategoriaControlador ();
 
         Categoria categoria = new Categoria ();
         categoria.setDenominacion ( "golosinas" );
         categoria.setDescripcion ( "abcdasd" );
 
-        categoriaControlador.crear ( categoria );
-
-
-
-    }
-    
+        categoriaControlador.crear ( categoria );*/
+    }    
 }

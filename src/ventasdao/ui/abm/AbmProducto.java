@@ -246,12 +246,12 @@ public class AbmProducto extends javax.swing.JInternalFrame {
         try {
             productoControlador.eliminar(producto);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             jtListadoProducto.setModel(new GrillaProducto(productoControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.limpiarCampos();
         this.refreshTable();
@@ -273,12 +273,12 @@ public class AbmProducto extends javax.swing.JInternalFrame {
         try {
             productoControlador.modificar(producto);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
             jtListadoProducto.setModel(new GrillaProducto(productoControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.limpiarCampos();
         this.refreshTable();
@@ -303,7 +303,7 @@ public class AbmProducto extends javax.swing.JInternalFrame {
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

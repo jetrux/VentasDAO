@@ -324,7 +324,7 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         try {
             jtListadoFactura.setModel(new GrillaFactura((ArrayList<Factura>) facturaControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.limpiarCampos();
         this.refreshTable();
@@ -345,7 +345,7 @@ public class AbmFactura extends javax.swing.JInternalFrame {
             facturaControlador.crear(factura);
             limpiarCampos();
         } catch (Exception ex) {
-            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.limpiarCampos();
         this.refreshTable();
@@ -369,14 +369,15 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfCantidadActionPerformed
 
-    private void refreshTable(){
+    private void refreshTable()
+    {
         try 
         {
             jtListadoFactura.setModel(new GrillaFactura((ArrayList<Factura>) facturaControlador.listar()));
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFactura.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

@@ -219,6 +219,8 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetFields();
+        refreshTable();
     }//GEN-LAST:event_jbModificarActionPerformed
 
     private void jtfIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfIdActionPerformed
@@ -241,6 +243,8 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetFields();
+        refreshTable();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAltaCategoriaActionPerformed
@@ -262,12 +266,32 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         } catch (Exception ex) {
             Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
+        resetFields();
+        refreshTable();
     }//GEN-LAST:event_jbAltaCategoriaActionPerformed
 
     private void jbAltaCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbAltaCategoriaMouseClicked
 
     }//GEN-LAST:event_jbAltaCategoriaMouseClicked
 
+    private void resetFields()
+    {    
+        jtfId.setText("");
+        jtfDenominacion.setText("");
+        jtfDescripcion.setText("");
+    }
+    
+    private void refreshTable()
+    {
+        try 
+        {
+            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

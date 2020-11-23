@@ -67,4 +67,8 @@ public class Cliente {
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+    
+    public String toString() {
+        return "" + nombre;
+    }
 }

@@ -40,40 +40,27 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         clienteControlador = new ClienteControlador();
         tipoClienteControlador = new TipoClienteControlador();
         
-        try {
+        try 
+        {
             grillaCliente = new GrillaCliente(clienteControlador.listar());
             jtListadoCliente.setModel(grillaCliente);
-        } catch (Exception ex) {
-            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
                     
-        try {
+        try 
+        {
             ArrayList<TipoCliente> tipoCliente = (ArrayList<TipoCliente>) tipoClienteControlador.listar();
             
             modelCombo = new DefaultComboBoxModel(tipoCliente.toArray());
             jcbTipoCliente.setModel(modelCombo);
-        } catch (Exception ex) {
-            Logger.getLogger(AbmProducto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        /*
-        ArrayList<Cliente> clientes;
-        try {
-            clientes = clienteControlador.listar();
-            grillaCliente = new GrillaCliente(clientes);
-        } catch (Exception e) {
-            e.printStackTrace ();
-        }
-        
-        jtListadoCliente.setModel(grillaCliente);
-        
-        try {
-            modelCombo = new DefaultComboBoxModel(tipoClienteControlador.listar().toArray());
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jcbTipoCliente.setModel(modelCombo);*/
-        
     }
 
     /**
@@ -245,14 +232,17 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         try 
         {
             clienteControlador.crear(cliente);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         try 
         {
             jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
         } 
-        catch (Exception ex) {
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.resetFields();
@@ -275,14 +265,20 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         
         cliente.setId(Integer.parseInt(jtfId.getText()));
         
-        try {
+        try 
+        {
             clienteControlador.eliminar(cliente);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        try 
+        {
             jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
-        } catch (Exception ex) {
+        }
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.resetFields();
@@ -299,14 +295,20 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         cliente.setId(Integer.parseInt(jtfId.getText()));
         cliente.setTipoCliente((TipoCliente) jcbTipoCliente.getSelectedItem());
         
-        try {
+        try 
+        {
             clienteControlador.modificar(cliente);
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex)
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        try 
+        {
             jtListadoCliente.setModel(new GrillaCliente(clienteControlador.listar()));
-        } catch (Exception ex) {
+        } 
+        catch (Exception ex) 
+        {
             Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.resetFields();
@@ -315,29 +317,6 @@ public class AbmCliente extends javax.swing.JInternalFrame {
 
     private void jcbTipoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbTipoClienteActionPerformed
         // TODO add your handling code here:
-        /*
-        cliente=new Cliente();
-        
-        TipoClienteControlador tipoClienteControl = new TipoClienteControlador();
-        ArrayList<TipoCliente> alTipo = new ArrayList<>();
-        
-        try {
-            alTipo = (ArrayList<TipoCliente>) tipoClienteControl.listar();
-        } catch (Exception ex) {
-            Logger.getLogger(AbmCliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
-        TipoCliente[] obj= new TipoCliente[alTipo.size()];
-        for (int i = 0; i < alTipo.size(); i++) {
-            obj[i]= alTipo.get(i);
-          
-        }
-        DefaultComboBoxModel<TipoCliente> boxModel= new DefaultComboBoxModel<>(obj);
-        //jcbTipoCliente.setModel(boxModel);
-        jcbTipoCliente.setSelectedItem(null);
-        this.resetFields();
-        this.refreshTable();
-*/
     }//GEN-LAST:event_jcbTipoClienteActionPerformed
 
     private void resetFields()

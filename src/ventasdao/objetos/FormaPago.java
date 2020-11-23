@@ -37,4 +37,8 @@ public class FormaPago {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }    
+    
+    public String toString() {
+        return "" + nombre;
+    }
 }
