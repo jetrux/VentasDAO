@@ -85,8 +85,8 @@ public class ProductoControlador implements ICrud<Producto> {
         producto.setId(id);
         producto.setCategoria(getCategoria(resultSet.getInt("categoria_id")));
         producto.setNombre(resultSet.getString("nombre"));
-        producto.setStockMin(resultSet.getInt("stock_minimo"));
-        producto.setStockMax(resultSet.getInt("stock_maximo"));
+        //producto.setStockMin(resultSet.getInt("stock_minimo"));
+        //producto.setStockMax(resultSet.getInt("stock_maximo"));
         producto.setPrecio(resultSet.getFloat("precio"));
         producto.setDescripcion(resultSet.getString("descripcion"));
         producto.setFechaCreacion(resultSet.getDate("fecha_creacion"));        

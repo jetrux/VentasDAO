@@ -10,8 +10,8 @@ public class Producto {
     private String descripcion;
     public Float precio;    
     private Date FechaCreacion;    
-    private Integer StockMax;    
-    private Integer StockMin;
+    //private Integer StockMax;    
+    //private Integer StockMin;
 
     public Categoria getCategoria() {
         return categoria;
@@ -60,7 +60,7 @@ public class Producto {
     public void setFechaCreacion(Date FechaCreacion) {
         this.FechaCreacion = FechaCreacion;
     }    
-
+/*
     public Integer getStockMax() {
         return StockMax;
     }
@@ -76,7 +76,7 @@ public class Producto {
     public void setStockMin(Integer StockMin) {
         this.StockMin = StockMin;
     }
-    
+    */
     public String toString() {
         return "" + nombre;
     }

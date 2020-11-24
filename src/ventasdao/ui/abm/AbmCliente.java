@@ -274,9 +274,10 @@ public class AbmCliente extends javax.swing.JInternalFrame {
     private void jtListadoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoClienteMouseClicked
         // TODO add your handling code here:
         Cliente cliente = grillaCliente.getClienteFromRow(jtListadoCliente.getSelectedRow());
+        
         jtfId.setText(cliente.getId().toString());
         jtfNombre.setText(cliente.getNombre());
-        jtfCuil.setText(cliente.getCuil().toString());
+        jtfCuil.setText(cliente.getCuil());
         jtfRazonSocial.setText(cliente.getRazonSocial());
         jcbTipoCliente.setSelectedItem(cliente.getTipoCliente());
     }//GEN-LAST:event_jtListadoClienteMouseClicked
