@@ -13,8 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ventasdao.dominio.Conexion;
 import ventasdao.objetos.Cliente;
 import ventasdao.objetos.Factura;
@@ -39,7 +37,7 @@ public class FacturaControlador implements ICrud<Factura>{
     @Override
     public boolean crear(Factura entidad) throws SQLException, Exception {
         connection = Conexion.obtenerConexion ();
-        String sql = "INSERT INTO facturas(producto_id, cantidad_producto, cliente_id, formas_pago_id, fecha, observacion) VALUES (?, ?, ?, ?, ?, ?);";
+        this.sql = "INSERT INTO facturas(producto_id, cantidad_producto, cliente_id, formas_pago_id, fecha, observacion, total) VALUES (?, ?, ?, ?, ?, ?, ?);";
         Date fecha = new Date(entidad.getFecha().getTime());
         
         ps = connection.prepareStatement(sql);
@@ -50,6 +48,7 @@ public class FacturaControlador implements ICrud<Factura>{
         ps.setInt(4, entidad.getFormaPago().getId());
         ps.setDate(5, fecha);
         ps.setString(6, entidad.getObservacion());
+        ps.setFloat(7, entidad.getTotal());
         
         ps.executeUpdate();
         connection.close();
@@ -78,7 +77,7 @@ public class FacturaControlador implements ICrud<Factura>{
     @Override
     public boolean modificar(Factura entidad) throws SQLException, Exception {
         connection = Conexion.obtenerConexion ();
-        sql = "UPDATE facturas SET producto_id=?, cantidad_producto=?, cliente_id=?, formas_pago_id=?, numero_factura=?, fecha=?, observacion=? WHERE id=?";
+        sql = "UPDATE facturas SET producto_id=?, cantidad_producto=?, cliente_id=?, formas_pago_id=?, numero_factura=?, fecha=?, observacion=?, total=? WHERE id=?";
         Date fecha = new Date(entidad.getFecha().getTime());
         
         ps = connection.prepareStatement(sql);
@@ -90,7 +89,8 @@ public class FacturaControlador implements ICrud<Factura>{
         ps.setInt(5,entidad.getNumFactura());
         ps.setDate(6, fecha);
         ps.setString(7, entidad.getObservacion());
-        ps.setInt(8, entidad.getId());
+        ps.setFloat(8, entidad.getTotal());
+        ps.setInt(9, entidad.getId());
         
         ps.executeUpdate();        
         connection.close();
@@ -121,6 +121,7 @@ public class FacturaControlador implements ICrud<Factura>{
                 factura.setNumFactura(resultSet.getInt("numero_factura"));
                 factura.setFecha(resultSet.getDate("fecha"));
                 factura.setObservacion(resultSet.getString("observacion"));
+                factura.setTotal(resultSet.getFloat("total"));
 
                 facturas.add(factura);                
             }

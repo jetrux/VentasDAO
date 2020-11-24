@@ -193,7 +193,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Precion"/>
+        <Property name="text" type="java.lang.String" value="Precio"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jbEliminarProducto">

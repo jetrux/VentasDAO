@@ -28,7 +28,7 @@ public class GrillaFactura extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-         return 8;
+         return 9;
     }
 
     @Override
@@ -43,6 +43,7 @@ public class GrillaFactura extends AbstractTableModel{
               case 5: return factura.getNumFactura();
               case 6: return factura.getFecha();
               case 7: return factura.getObservacion();
+              case 8: return factura.getTotal();
               default: return "";
           }
         
@@ -59,6 +60,7 @@ public class GrillaFactura extends AbstractTableModel{
             case 5: return "Numero de Factura";
             case 6: return "Fecha";
             case 7: return "Observacion";
+            case 8: return "Total";
             default: return "";
         }
     }

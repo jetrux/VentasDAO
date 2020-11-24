@@ -27,8 +27,6 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
     private GrillaTipoCliente grillaTipoCliente;
     private TipoClienteControlador tipoClienteControlador = new TipoClienteControlador();
     
-    
-    
     public AbmTipoCliente() {
         initComponents();
         
@@ -42,12 +40,8 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         {
             e.printStackTrace ();
         }
-
-
         
         jtListadoTipoCliente.setModel(grillaTipoCliente);
-        
-        
     }
 
     /**
@@ -203,6 +197,8 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        refreshTable();
+        limpiarCampos();
     }//GEN-LAST:event_jbAgregarActionPerformed
 
     private void jtListadoTipoClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoTipoClienteMouseClicked
@@ -236,6 +232,8 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        refreshTable();
+        limpiarCampos();
     }//GEN-LAST:event_jbEliminarActionPerformed
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
@@ -262,8 +260,29 @@ public class AbmTipoCliente extends javax.swing.JInternalFrame {
         {
             Logger.getLogger(AbmTipoCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        refreshTable();
+        limpiarCampos();
     }//GEN-LAST:event_jbModificarActionPerformed
 
+    private void refreshTable()
+    {
+        try 
+        {
+            jtListadoTipoCliente.setModel(new GrillaTipoCliente((ArrayList<TipoCliente>) tipoClienteControlador.listar()));
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(AbmFactura.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void limpiarCampos()
+    {
+        jtfId.setText("");
+        jtfNombre.setText("");
+        jtfDescripcion.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

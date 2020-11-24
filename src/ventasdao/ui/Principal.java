@@ -10,6 +10,7 @@ import ventasdao.ui.abm.AbmCliente;
 import ventasdao.ui.abm.AbmProducto;
 import ventasdao.ui.abm.AbmTipoCliente;
 import ventasdao.ui.abm.AbmFactura;
+import ventasdao.ui.abm.AbmFormaPago;
 
 /**
  *
@@ -41,6 +42,7 @@ public class Principal extends javax.swing.JFrame {
         jmiTipoCliente = new javax.swing.JMenuItem();
         jmiProducto = new javax.swing.JMenuItem();
         jmiFactura = new javax.swing.JMenuItem();
+        jmiFormaPago = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +101,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jmiFactura);
+
+        jmiFormaPago.setText("Formas de Pago");
+        jmiFormaPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiFormaPagoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jmiFormaPago);
 
         jMenuBar1.add(jMenu1);
 
@@ -160,6 +170,13 @@ public class Principal extends javax.swing.JFrame {
         abmFactura.setVisible(true);
     }//GEN-LAST:event_jmiFacturaActionPerformed
 
+    private void jmiFormaPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiFormaPagoActionPerformed
+        // TODO add your handling code here:
+        AbmFormaPago abmFormaPago = new AbmFormaPago();
+        jdpContenedorPrincipal.add(abmFormaPago);
+        abmFormaPago.setVisible(true);
+    }//GEN-LAST:event_jmiFormaPagoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -202,6 +219,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiCategoria;
     private javax.swing.JMenuItem jmiCliente;
     private javax.swing.JMenuItem jmiFactura;
+    private javax.swing.JMenuItem jmiFormaPago;
     private javax.swing.JMenuItem jmiProducto;
     private javax.swing.JMenuItem jmiTipoCliente;
     // End of variables declaration//GEN-END:variables

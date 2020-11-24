@@ -8,7 +8,7 @@ public class Producto {
     private Categoria categoria;
     private String nombre;
     private String descripcion;
-    private Float precio;    
+    public Float precio;    
     private Date FechaCreacion;    
     private Integer StockMax;    
     private Integer StockMin;

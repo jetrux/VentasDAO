@@ -9,43 +9,44 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JPanel;
 import ventasdao.controladores.CategoriaControlador;
-import ventasdao.objetos.Categoria;
-import ventasdao.ui.grilla.GrillaCategoria;
+import ventasdao.controladores.FormaPagoControlador;
+import ventasdao.objetos.FormaPago;
+import ventasdao.ui.grilla.GrillaFormaPago;
 
 /**
  *
  * @author Hugo Chanampe
  */
-public class AbmCategoria extends javax.swing.JInternalFrame {
+public class AbmFormaPago extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form AbmCategoria
      */
-    private Categoria categoria;
-    private CategoriaControlador categoriaControlador;
-    private GrillaCategoria grillaCategoria;
+    private FormaPago formaPago;
+    private FormaPagoControlador formaPagoControlador;
+    private GrillaFormaPago grillaFormaPago;
     
-    public AbmCategoria() {
+    public AbmFormaPago() {
         initComponents();
         
-        categoriaControlador = new CategoriaControlador();
-        ArrayList<Categoria> categorias = new ArrayList<>();
+        formaPagoControlador = new FormaPagoControlador();
+        ArrayList<FormaPago> formaPagos = new ArrayList<>();
 
         try {
-            categorias = categoriaControlador.listar();
+            formaPagos = (ArrayList<FormaPago>) formaPagoControlador.listar();
         } catch (Exception e) {
             e.printStackTrace ();
         }
 
-        grillaCategoria = new GrillaCategoria(categorias);
-        jtListadoCategorias.setModel(grillaCategoria);
+        grillaFormaPago = new GrillaFormaPago(formaPagos);
+        jtListadoFormaPago.setModel(grillaFormaPago);
     }
     
     public void limpiarCampos(){
     
-    jtfDenominacion.setText("");
+    jtfNombre.setText("");
     jtfDescripcion.setText("");
     
     }
@@ -61,11 +62,11 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jtfDenominacion = new javax.swing.JTextField();
+        jtfNombre = new javax.swing.JTextField();
         jtfDescripcion = new javax.swing.JTextField();
         jbAltaCategoria = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jtListadoCategorias = new javax.swing.JTable();
+        jtListadoFormaPago = new javax.swing.JTable();
         jbModificar = new javax.swing.JButton();
         jtfId = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -76,7 +77,7 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Categorias");
 
-        jLabel1.setText("Denominacion");
+        jLabel1.setText("Nombre");
 
         jLabel2.setText("Descripcion");
 
@@ -92,7 +93,7 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
             }
         });
 
-        jtListadoCategorias.setModel(new javax.swing.table.DefaultTableModel(
+        jtListadoFormaPago.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -103,12 +104,12 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jtListadoCategorias.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtListadoFormaPago.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtListadoCategoriasMouseClicked(evt);
+                jtListadoFormaPagoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jtListadoCategorias);
+        jScrollPane1.setViewportView(jtListadoFormaPago);
 
         jbModificar.setText("Modificar");
         jbModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -154,11 +155,11 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfDenominacion)
+                            .addComponent(jtfNombre)
                             .addComponent(jtfDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                             .addComponent(jtfId))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)))
                 .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
@@ -172,7 +173,7 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
-                            .addComponent(jtfDenominacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -192,41 +193,41 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtListadoCategoriasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoCategoriasMouseClicked
+    private void jtListadoFormaPagoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoFormaPagoMouseClicked
         
-       Categoria categoria = grillaCategoria.getCategoriaFromRow(jtListadoCategorias.getSelectedRow());
+       FormaPago categoria = grillaFormaPago.getFormaPagoFromRow(jtListadoFormaPago.getSelectedRow());
        
-       jtfDenominacion.setText(categoria.getDenominacion());
+       jtfNombre.setText(categoria.getNombre());
        jtfDescripcion.setText(categoria.getDescripcion());
        jtfId.setText(categoria.getId().toString());
-    }//GEN-LAST:event_jtListadoCategoriasMouseClicked
+    }//GEN-LAST:event_jtListadoFormaPagoMouseClicked
 
     private void jbModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbModificarActionPerformed
         try {
             // TODO add your handling code here:
-            categoria = new Categoria();
+            formaPago = new FormaPago();
             
-            if(jtfDenominacion.getText().length() >= 3 || jtfDescripcion.getText().length() >= 3)
+            formaPago.setId( Integer.parseInt( jtfId.getText() ) );
+            
+            if(jtfNombre.getText().length() >= 3 || jtfDescripcion.getText().length() >= 3)
             {
-                 categoria.setDenominacion( jtfDenominacion.getText() );
-                 categoria.setDescripcion( jtfDescripcion.getText() );
+                formaPago.setNombre(jtfNombre.getText() );
+                formaPago.setDescripcion( jtfDescripcion.getText() );
             }
             else
-            {
+            {           
                 JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
-            }            
-           
-            categoria.setId( Integer.parseInt( jtfId.getText() ) );
+            }
             
-            categoriaControlador.modificar(categoria);
+            formaPagoControlador.modificar(formaPago);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
-            jtListadoCategorias.setModel( new GrillaCategoria( categoriaControlador.listar() ));
+            jtListadoFormaPago.setModel( new GrillaFormaPago( (ArrayList<FormaPago>) formaPagoControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
         resetFields();
         refreshTable();
@@ -238,19 +239,19 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
 
     private void jbEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEliminarActionPerformed
         // TODO add your handling code here:
-        categoria=new Categoria();
+        formaPago=new FormaPago();
         
-        categoria.setId( Integer.parseInt( jtfId.getText() ) );
+        formaPago.setId( Integer.parseInt( jtfId.getText() ) );
         
         try {
-            categoriaControlador.eliminar(categoria);
+            formaPagoControlador.eliminar(formaPago);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            jtListadoCategorias.setModel( new GrillaCategoria( categoriaControlador.listar() ));
+            jtListadoFormaPago.setModel( new GrillaFormaPago( (ArrayList<FormaPago>) formaPagoControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
         resetFields();
         refreshTable();
@@ -259,28 +260,30 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     private void jbAltaCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAltaCategoriaActionPerformed
 
         // TODO add your handling code here:
-        categoria = new Categoria();
+        formaPago = new FormaPago();
 
-        if(jtfDenominacion.getText().length() >= 3 || jtfDescripcion.getText().length() >= 3)
+        if(jtfNombre.getText().length() >= 3 || jtfDescripcion.getText().length() >= 3)
         {
-            categoria.setDenominacion( jtfDenominacion.getText() );
-            categoria.setDescripcion( jtfDescripcion.getText() );
+            formaPago.setNombre(jtfNombre.getText());
+            formaPago.setDescripcion(jtfDescripcion.getText());
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
         }
+        
+        //formaPago.setNombre(jtfNombre.getText());
 
         try {
-            categoriaControlador.crear(categoria);
+            formaPagoControlador.crear(formaPago);
         } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         try {
-            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
+            jtListadoFormaPago.setModel(new GrillaFormaPago((ArrayList<FormaPago>) formaPagoControlador.listar()));
         } catch (Exception ex) {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
         resetFields();
         refreshTable();
@@ -293,7 +296,7 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     private void resetFields()
     {    
         jtfId.setText("");
-        jtfDenominacion.setText("");
+        jtfNombre.setText("");
         jtfDescripcion.setText("");
     }
     
@@ -301,11 +304,11 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     {
         try 
         {
-            jtListadoCategorias.setModel(new GrillaCategoria(categoriaControlador.listar()));
+            jtListadoFormaPago.setModel(new GrillaFormaPago((ArrayList<FormaPago>) formaPagoControlador.listar()));
         } 
         catch (Exception ex) 
         {
-            Logger.getLogger(AbmCategoria.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbmFormaPago.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -317,9 +320,9 @@ public class AbmCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JButton jbAltaCategoria;
     private javax.swing.JButton jbEliminar;
     private javax.swing.JButton jbModificar;
-    private javax.swing.JTable jtListadoCategorias;
-    private javax.swing.JTextField jtfDenominacion;
+    private javax.swing.JTable jtListadoFormaPago;
     private javax.swing.JTextField jtfDescripcion;
     private javax.swing.JTextField jtfId;
+    private javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
 }

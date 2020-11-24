@@ -5,20 +5,28 @@
  */
 package ventasdao.ui.abm;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import ventasdao.controladores.ClienteControlador;
 import ventasdao.controladores.FacturaControlador;
 import ventasdao.controladores.FormaPagoControlador;
 import ventasdao.controladores.ProductoControlador;
+import ventasdao.dominio.Conexion;
 import ventasdao.objetos.Cliente;
 import ventasdao.objetos.Factura;
 import ventasdao.objetos.FormaPago;
 import ventasdao.objetos.Producto;
 import ventasdao.ui.grilla.GrillaFactura;
+
 
 /**
  *
@@ -36,6 +44,13 @@ public class AbmFactura extends javax.swing.JInternalFrame {
     private FormaPagoControlador formaPagoControlador;
     private GrillaFactura grillaFactura;
     private DefaultComboBoxModel modelCombo;
+    
+    private Connection connection;
+    private Statement statementmt;
+    private PreparedStatement ps;
+    private ResultSet resultSet;
+    private String sql;
+    private Producto producto;
     
     public AbmFactura() {
         initComponents();
@@ -111,6 +126,10 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         jtfCantidad = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtaObservacion = new javax.swing.JTextArea();
+        jLabel9 = new javax.swing.JLabel();
+        jtfTotal = new javax.swing.JTextField();
+        jtfPrecioProd = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
 
         setClosable(true);
         setMaximizable(true);
@@ -180,6 +199,11 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         jLabel8.setText("Observacion");
 
         jcbProducto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jcbProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbProductoActionPerformed(evt);
+            }
+        });
 
         jcbFormaPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -188,10 +212,23 @@ public class AbmFactura extends javax.swing.JInternalFrame {
                 jtfCantidadActionPerformed(evt);
             }
         });
+        jtfCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfCantidadKeyReleased(evt);
+            }
+        });
 
         jtaObservacion.setColumns(20);
         jtaObservacion.setRows(5);
         jScrollPane2.setViewportView(jtaObservacion);
+
+        jLabel9.setText("Total");
+
+        jtfTotal.setEditable(false);
+
+        jtfPrecioProd.setEditable(false);
+
+        jLabel10.setText("Precio del Producto");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -229,7 +266,15 @@ public class AbmFactura extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jbEditarProducto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jbEliminarProducto)))
+                        .addComponent(jbEliminarProducto)
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfPrecioProd, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13))
         );
         layout.setVerticalGroup(
@@ -273,10 +318,17 @@ public class AbmFactura extends javax.swing.JInternalFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbAgregarProducto)
-                    .addComponent(jbEditarProducto)
-                    .addComponent(jbEliminarProducto))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtfTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jtfPrecioProd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbAgregarProducto)
+                        .addComponent(jbEditarProducto)
+                        .addComponent(jbEliminarProducto)))
                 .addGap(15, 15, 15))
         );
 
@@ -306,15 +358,58 @@ public class AbmFactura extends javax.swing.JInternalFrame {
     private void jbEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarProductoActionPerformed
         // TODO add your handling code here:
         Factura factura = new Factura();
+        
+        Integer aux =Integer.parseInt(jtfCantidad.getText());
+        if(aux >= 1)
+        {
+            factura.setCantidadProd(Integer.parseInt(jtfCantidad.getText()));
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar numeros mayores a 0 para guardar");
+        }
+        
+        if(jtaObservacion.getText().length() >= 3)
+        {
+            factura.setObservacion(jtaObservacion.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
+        }
 
-        factura.setId(Integer.parseInt(jtfId.getText()));
-        factura.setProducto((Producto)jcbProducto.getSelectedItem());
-        factura.setCantidadProd(Integer.parseInt(jtfCantidad.getText()));
-        factura.setCliente((Cliente)jcbCliente.getSelectedItem());
-        factura.setFormaPago((FormaPago)(jcbFormaPago.getSelectedItem()));
+        factura.setId(Integer.parseInt(jtfId.getText()));        
+        
+        if(jcbProducto.getSelectedIndex() != 0)
+        {
+            factura.setProducto((Producto)jcbProducto.getSelectedItem());           
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el producto");
+        }
+        
+        if(jcbCliente.getSelectedIndex() != 0)
+        {
+            factura.setCliente((Cliente)jcbCliente.getSelectedItem());           
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el cliente");
+        }
+        
+        if(jcbFormaPago.getSelectedIndex() != 0)
+        {
+            factura.setFormaPago((FormaPago)(jcbFormaPago.getSelectedItem()));   
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione la forma de pago");
+        }
+        
         factura.setNumFactura(Integer.parseInt(jtfNumFactura.getText()));
         factura.setFecha((Date)jdcFecha.getDate());
-        factura.setObservacion(jtaObservacion.getText());
+        factura.setTotal(Float.parseFloat(jtfTotal.getText()));
 
         try {
             facturaControlador.modificar(factura);
@@ -334,13 +429,55 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Factura factura = new Factura();
         
-        factura.setProducto((Producto)jcbProducto.getSelectedItem());
-        factura.setCantidadProd(Integer.parseInt(jtfCantidad.getText()));
-        factura.setCliente((Cliente)jcbCliente.getSelectedItem());
-        factura.setFormaPago((FormaPago)(jcbFormaPago.getSelectedItem()));
+        Integer aux = Integer.parseInt(jtfCantidad.getText());
+        if(aux >= 1)
+        {
+            factura.setCantidadProd(Integer.parseInt(jtfCantidad.getText()));
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar numeros mayores a 0 para guardar");
+        }
+        
+        if(jtaObservacion.getText().length() >= 3)
+        {
+            factura.setObservacion(jtaObservacion.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
+        }      
+        
+        if(jcbProducto.getSelectedIndex() != 0)
+        {
+            factura.setProducto((Producto)jcbProducto.getSelectedItem());           
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el producto");
+        }
+        
+        if(jcbCliente.getSelectedIndex() != 0)
+        {
+            factura.setCliente((Cliente)jcbCliente.getSelectedItem());           
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el cliente");
+        }
+        
+        if(jcbFormaPago.getSelectedIndex() != 0)
+        {
+            factura.setFormaPago((FormaPago)(jcbFormaPago.getSelectedItem()));   
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione la forma de pago");
+        }
+        
         factura.setFecha((Date)jdcFecha.getDate());
-        factura.setObservacion(jtaObservacion.getText());
-
+        factura.setTotal(Float.parseFloat(jtfTotal.getText()));
+        
         try {
             facturaControlador.crear(factura);
             limpiarCampos();
@@ -351,6 +488,14 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         this.refreshTable();
     }//GEN-LAST:event_jbAgregarProductoActionPerformed
 
+    private void ActualizarTotal()
+    {
+        Float auxCant = Float.parseFloat(jtfCantidad.getText());
+        Float auxPrecio = Float.parseFloat(jtfPrecioProd.getText());
+        Float auxTotal = auxPrecio * auxCant;
+        jtfTotal.setText(auxTotal.toString());
+    }
+    
     private void jtListadoFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtListadoFacturaMouseClicked
         // TODO add your handling code here:
         Factura factura = grillaFactura.getFacturaFromRow(jtListadoFactura.getSelectedRow());
@@ -363,11 +508,52 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         jtfNumFactura.setText(factura.getNumFactura().toString());
         jdcFecha.setDate(factura.getFecha());
         jtaObservacion.setText(factura.getObservacion());
+        //jtfPrecioProd.setText(factura.get().toString());
+        jtfTotal.setText(factura.getTotal().toString());
+        
+        try 
+        {
+            connection=Conexion.obtenerConexion();
+            this.statementmt = connection.createStatement();
+            this.sql = "SELECT precio FROM productos WHERE nombre= '"+jcbProducto.getSelectedItem()+"'";
+            this.resultSet   = statementmt.executeQuery(sql);
+            
+            resultSet.next();
+            jtfPrecioProd.setText(String.valueOf(resultSet.getFloat("precio")));
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }        
     }//GEN-LAST:event_jtListadoFacturaMouseClicked
 
     private void jtfCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCantidadActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_jtfCantidadActionPerformed
+
+    private void jcbProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProductoActionPerformed
+        // TODO add your handling code here:        
+        try 
+        {
+            connection=Conexion.obtenerConexion();
+            this.statementmt = connection.createStatement();
+            this.sql = "SELECT precio FROM productos WHERE nombre= '"+jcbProducto.getSelectedItem()+"'";
+            this.resultSet   = statementmt.executeQuery(sql);
+            
+            resultSet.next();
+            jtfPrecioProd.setText(String.valueOf(resultSet.getFloat("precio")));
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_jcbProductoActionPerformed
+
+    private void jtfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCantidadKeyReleased
+        // TODO add your handling code here:
+        ActualizarTotal();
+    }//GEN-LAST:event_jtfCantidadKeyReleased
 
     private void refreshTable()
     {
@@ -387,10 +573,14 @@ public class AbmFactura extends javax.swing.JInternalFrame {
         jtfCantidad.setText("");
         jtfNumFactura.setText("");
         jtaObservacion.setText("");
+        jcbProducto.setSelectedIndex(0);
+        jcbCliente.setSelectedIndex(0);
+        jcbFormaPago.setSelectedIndex(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -398,6 +588,7 @@ public class AbmFactura extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton jbAgregarProducto;
@@ -412,5 +603,7 @@ public class AbmFactura extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jtfCantidad;
     private javax.swing.JTextField jtfId;
     private javax.swing.JTextField jtfNumFactura;
+    private javax.swing.JTextField jtfPrecioProd;
+    private javax.swing.JTextField jtfTotal;
     // End of variables declaration//GEN-END:variables
 }

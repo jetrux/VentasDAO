@@ -29,12 +29,31 @@ public class FormaPagoControlador implements ICrud<FormaPago>{
     
     @Override
     public boolean crear(FormaPago entidad) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection = Conexion.obtenerConexion ();
+        this.sql = "INSERT INTO formas_pago(nombre, descripcion) VALUES (?, ?);";
+        
+        ps = connection.prepareStatement(sql);
+        
+        ps.setString(1, entidad.getNombre());
+        ps.setString(2, entidad.getDescripcion());
+        
+        ps.executeUpdate();
+        connection.close();
+        
+        return false;
     }
 
     @Override
     public boolean eliminar(FormaPago entidad) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection=Conexion.obtenerConexion();
+        this.sql="DELETE FROM formas_pago WHERE id=?";
+        
+        ps = connection.prepareStatement(sql);
+        ps.setInt(1, entidad.getId());
+       
+        ps.executeUpdate();
+        connection.close();
+        return true;
     }
 
     @Override
@@ -59,7 +78,19 @@ public class FormaPagoControlador implements ICrud<FormaPago>{
 
     @Override
     public boolean modificar(FormaPago entidad) throws SQLException, Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        connection = Conexion.obtenerConexion ();
+        sql = "UPDATE formas_pago SET nombre=?, descripcion=? WHERE id=?";
+        
+        ps = connection.prepareStatement(sql);
+        
+        ps.setString(1, entidad.getNombre());
+        ps.setString(2,entidad.getDescripcion());
+        ps.setInt(3, entidad.getId());
+        
+        ps.executeUpdate();        
+        connection.close();
+        
+        return true;
     }
 
     @Override

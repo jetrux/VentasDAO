@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import ventasdao.controladores.CategoriaControlador;
 import ventasdao.controladores.ProductoControlador;
 import ventasdao.objetos.Categoria;
@@ -121,7 +122,7 @@ public class AbmProducto extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Categorias");
 
-        jLabel4.setText("Precion");
+        jLabel4.setText("Precio");
 
         jbEliminarProducto.setText("Eliminar Producto");
         jbEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -221,11 +222,33 @@ public class AbmProducto extends javax.swing.JInternalFrame {
     private void jbAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarProductoActionPerformed
         // TODO add your handling code here:
         Producto producto = new Producto();
-        producto.setDescripcion(jtfDescripcion.getText());
-        producto.setNombre(jtfNombre.getText());
-        producto.setPrecio(Float.parseFloat(jtfPrecio.getText()));
+        
+        Float aux =Float.parseFloat(jtfPrecio.getText());
+        if(aux >= 1)
+        {
+            producto.setPrecio(Float.parseFloat(jtfPrecio.getText()));
+        }
+        
+        if(jtfNombre.getText().length() >= 3 || jtfDescripcion.getText().length() >= 3)
+        {
+            producto.setNombre(jtfNombre.getText());
+            producto.setDescripcion(jtfDescripcion.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
+        }
+        
         producto.setFechaCreacion(jdcFechaCreacion.getDate());
-        producto.setCategoria((Categoria)jcbCategorias.getSelectedItem());
+        
+        if(jcbCategorias.getSelectedIndex() != 0)
+        {
+            producto.setCategoria((Categoria)jcbCategorias.getSelectedItem());  
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione categoria");
+        }
         
         try {
             productoControlador.crear(producto);
@@ -260,13 +283,35 @@ public class AbmProducto extends javax.swing.JInternalFrame {
     private void jbEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarProductoActionPerformed
                 // TODO add your handling code here:
         Producto producto = new Producto();
+                
+        Float aux =Float.parseFloat(jtfPrecio.getText());
+        if(aux >= 1)
+        {
+            producto.setPrecio(Float.parseFloat(jtfPrecio.getText()));
+        }
+        
+        if(jtfNombre.getText().length() >= 3 || jtfDescripcion.getText().length() >= 3)
+        {
+            producto.setNombre(jtfNombre.getText());
+            producto.setDescripcion(jtfDescripcion.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
+        }
         
         producto.setId(Integer.parseInt(jtfId.getText()));
-        producto.setNombre(jtfNombre.getText());
-        producto.setDescripcion(jtfDescripcion.getText());
-        producto.setCategoria((Categoria)jcbCategorias.getSelectedItem());
+        
+        if(jcbCategorias.getSelectedIndex() != 0)
+        {
+            producto.setCategoria((Categoria)jcbCategorias.getSelectedItem());  
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione categoria");
+        }
+        
         producto.setFechaCreacion((Date)jdcFechaCreacion.getDate());
-        producto.setPrecio(Float.parseFloat(jtfPrecio.getText()));
         //producto.setStockMax(jtfStockMax.getText());
         //producto.setStockMin(jtfStockMin.getText());
         
@@ -313,6 +358,7 @@ public class AbmProducto extends javax.swing.JInternalFrame {
         jtfNombre.setText("");
         jtfDescripcion.setText("");
         jtfPrecio.setText("");
+        jcbCategorias.setSelectedIndex(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

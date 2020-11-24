@@ -16,12 +16,13 @@ public class Factura {
     
     private Integer id; 
     private Producto producto;
-    private Integer cantidadProd;
+    public Integer cantidadProd;
     private Cliente cliente;
     private FormaPago formaPago;
     private Integer numFactura;
     private Date fecha;
     private String observacion;
+    public Float total;
     
     //private List<LineaFactura> lineaFactura;    
 
@@ -87,5 +88,13 @@ public class Factura {
 
     public void setObservacion(String observacion) {
         this.observacion = observacion;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
     }
 }

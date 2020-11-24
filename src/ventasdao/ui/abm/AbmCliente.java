@@ -5,13 +5,11 @@
  */
 package ventasdao.ui.abm;
 
-import com.sun.security.ntlm.Client;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import ventasdao.controladores.ClienteControlador;
 import ventasdao.controladores.TipoClienteControlador;
 import ventasdao.objetos.Cliente;
@@ -224,10 +222,34 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Cliente cliente = new Cliente();
         
-        cliente.setNombre(jtfNombre.getText());
-        cliente.setCuil(jtfCuil.getText());
-        cliente.setRazonSocial(jtfRazonSocial.getText());
-        cliente.setTipoCliente((TipoCliente)jcbTipoCliente.getSelectedItem());
+        Integer aux =Integer.parseInt(jtfCuil.getText());
+        if(aux >= 1)
+        {
+            cliente.setCuil(jtfCuil.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar numeros mayores a 0 para guardar");
+        }
+        
+        if(jtfNombre.getText().length() >= 3 || jtfRazonSocial.getText().length() >= 3)
+        {
+            cliente.setNombre(jtfNombre.getText());
+            cliente.setRazonSocial(jtfRazonSocial.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
+        }
+        
+        if(jcbTipoCliente.getSelectedIndex() != 0)
+        {
+            cliente.setTipoCliente((TipoCliente)jcbTipoCliente.getSelectedItem());            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de cliente");
+        }
         
         try 
         {
@@ -254,7 +276,7 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         Cliente cliente = grillaCliente.getClienteFromRow(jtListadoCliente.getSelectedRow());
         jtfId.setText(cliente.getId().toString());
         jtfNombre.setText(cliente.getNombre());
-        jtfCuil.setText(cliente.getCuil());
+        jtfCuil.setText(cliente.getCuil().toString());
         jtfRazonSocial.setText(cliente.getRazonSocial());
         jcbTipoCliente.setSelectedItem(cliente.getTipoCliente());
     }//GEN-LAST:event_jtListadoClienteMouseClicked
@@ -289,11 +311,36 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         Cliente cliente = new Cliente();
         
-        cliente.setNombre(jtfNombre.getText());
-        cliente.setCuil(jtfCuil.getText());
-        cliente.setRazonSocial(jtfRazonSocial.getText());
+        Integer aux =Integer.parseInt(jtfId.getText());
+        if(aux >= 1)
+        {
+            cliente.setCuil(jtfCuil.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar numeros mayores a 0 para guardar");
+        }
+        
+        if(jtfNombre.getText().length() >= 3 || jtfRazonSocial.getText().length() >= 3)
+        {
+            cliente.setNombre(jtfNombre.getText());
+            cliente.setRazonSocial(jtfRazonSocial.getText());
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Asegurese de colocar mas de 3 caracteres para guardar");
+        }
+        
         cliente.setId(Integer.parseInt(jtfId.getText()));
-        cliente.setTipoCliente((TipoCliente) jcbTipoCliente.getSelectedItem());
+        
+        if(jcbTipoCliente.getSelectedIndex() != 0)
+        {
+            cliente.setTipoCliente((TipoCliente)jcbTipoCliente.getSelectedItem());            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione el tipo de cliente");
+        }
         
         try 
         {
@@ -325,6 +372,7 @@ public class AbmCliente extends javax.swing.JInternalFrame {
         jtfRazonSocial.setText("");
         jtfCuil.setText("");
         jtfNombre.setText(""); 
+        jcbTipoCliente.setSelectedIndex(0);
     }
     
     private void refreshTable()
